@@ -59,6 +59,12 @@ class Log_structure(models.Model):
     
     Grade = models.CharField(max_length=10, choices=Personal_Grade_Choice,  default='L')
     
+    #Personal_Grade_Choice = (
+    #    (True, 'Like'),
+    #    (False, 'Dislike'),
+    #    )
+    #Grade = models. BooleanField(choices=Personal_Grade_Choice,  default=True)
+    
     created_date = models.DateTimeField(
                 default=timezone.now)
     published_date = models.DateTimeField(
