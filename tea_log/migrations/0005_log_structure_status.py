@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tea_log', '0003_auto_20150914_1632'),
+        ('tea_log', '0004_log_structure_name'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='log_structure',
-            name='Grade',
-            field=models.IntegerField(choices=[(0, 'Like'), (1, 'Dislike')], default=1),
+            name='Status',
+            field=models.CharField(max_length=10, default='le', choices=[('le', 'Leaf'), ('tg', 'Tea bag')]),
         ),
     ]

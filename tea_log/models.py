@@ -19,13 +19,13 @@ class Log_structure(models.Model):
     Color = models.CharField(max_length=10,  choices=Tea_Color_Choices,  default='OO')
     
     Nation_Choices = (
-    ('CH', 'Chinese'),
-    ('JA', 'Japanese'),
-    ('ID', 'India'),
-    ('NE', 'Nepalese'),
-    ('CY', 'Cylon'),
-    ('TW', 'Twiwanese')
-    )
+        ('CH', 'Chinese'),
+        ('JA', 'Japanese'),
+        ('ID', 'India'),
+        ('NE', 'Nepalese'),
+        ('CY', 'Cylon'),
+        ('TW', 'Twiwanese')
+        )
     
     Nation = models.CharField(max_length=10,  choices=Nation_Choices,  default='CH')
     
@@ -41,26 +41,26 @@ class Log_structure(models.Model):
     
     Region = models.CharField(max_length=10,  choices=Region_Choice,  default='Un')
     
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default='NULL')
     
     Status_Choice = (
-    ('le', 'Leaf'),
-    ('tg', 'Tea bag'),
-    )
+        ('le', 'Leaf'),
+        ('tg', 'Tea bag'),
+        )
     
     Status = models.CharField(max_length=10,  choices=Status_Choice,  default='le')
     
-    text = models.TextField()
+    text = models.TextField(null=True, blank=True)
     
     Personal_Grade_Choice = (
-    ('L', 'Like'),
-    ('D', 'Dislike'),
-    )
+        ('L', 'Like'),
+        ('D', 'Dislike'),
+        )
     
     Grade = models.CharField(max_length=10, choices=Personal_Grade_Choice,  default='L')
     
     created_date = models.DateTimeField(
-            default=timezone.now)
+                default=timezone.now)
     published_date = models.DateTimeField(
             blank=True, null=True)
 

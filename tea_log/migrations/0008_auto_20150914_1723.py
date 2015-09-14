@@ -2,23 +2,24 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tea_log', '0002_auto_20150914_1625'),
+        ('tea_log', '0007_log_structure_grade'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='log_structure',
-            name='Grade',
-            field=models.BinaryField(choices=[(0, 'Like'), (1, 'Dislike')], default=1),
+            name='created_date',
+            field=models.DateTimeField(default=django.utils.timezone.now),
         ),
         migrations.AddField(
             model_name='log_structure',
-            name='Status',
-            field=models.CharField(choices=[('le', 'Leaf'), ('tg', 'Tea bag')], default='le', max_length=10),
+            name='published_date',
+            field=models.DateTimeField(blank=True, null=True),
         ),
     ]
