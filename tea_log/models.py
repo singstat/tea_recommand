@@ -1,34 +1,14 @@
 from django.db import models
 from django.utils import timezone
 
+class Company(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    def __str__(self):
+        return self.name
 
-class Log_structure(models.Model):
-    author  = models.ForeignKey('auth.User')
-    Company = models.CharField(max_length=200)
+class Region(models.Model):
     
-    Tea_Color_Choices = (
-            ('GR    ', 'Green'),
-            ('BL    ', 'Black'),
-            ('WH    ', 'White'),
-            ('OO    ', 'Oolong'),
-            ('PU-ERH', 'Pu-erh'),
-            ('PURPLE', 'Purple'),
-            ('BLENED', 'Blened')
-        )
-        
-    Color = models.CharField(max_length=10,  choices=Tea_Color_Choices,  default='OO')
-    
-    Nation_Choices = (
-        ('CH', 'Chinese'  ),
-        ('JA', 'Japanese' ),
-        ('ID', 'India'    ),
-        ('NE', 'Nepalese' ),
-        ('CY', 'Cylon'    ),
-        ('TW', 'Twiwanese')
-        )
-    
-    Nation = models.CharField(max_length=10,  choices=Nation_Choices,  default='CH')
-    
+    '''
     Region_Choice = (
     ('An    ','Anxi        '),
     ('Guang ','Guangdong   '),
@@ -38,19 +18,61 @@ class Log_structure(models.Model):
     ('ASS   ','Assam  '),
     ('Un    ','Unknown')
     )
+    '''
+    name = models.CharField(max_length=20, unique=True)
+    def __str__(self):
+        return self.name
+
+class TeaName(models.Model):
+    name = models.CharField(max_legnth=20, unique=True)
+    def __str__(self):
+        return self.name
+
+class Tea(models.Model):
+    name = models.ForeignKey(TeaName)
+    company = models.ForeignKey(Company)
+    region = models.ForeignKey(Region)
+    NATION_CHOICE = (
+        ('CH', 'Chinese'  ),
+        ('JA', 'Japanese' ),
+        ('ID', 'India'    ),
+        ('NE', 'Nepalese' ),
+        ('CY', 'Cylon'    ),
+        ('TW', 'Twiwanese'),
+        ('KO', 'Korea')
+        )
     
-    Region = models.CharField(max_length=10,  choices=Region_Choice,  default='Un')
+    nation = models.CharField(max_length=10,  choices=NATION_CHOICE,  default='CH')
     
-    name = models.CharField(max_length=50, null=True, blank=True)
+    COLOR_CHOICE = (
+            ('GR    ', 'Green'),
+            ('BL    ', 'Black'),
+            ('WH    ', 'White'),
+            ('OO    ', 'Oolong'),
+            ('PU-ERH', 'Pu-erh'),
+            ('PURPLE', 'Purple'),
+            ('BLENED', 'Blened')
+        )
+        
+    color = models.CharField(max_length=10,  choices=COLOR_CHOICE,  default='OO')
     
-    Status_Choice = (
+    STATUS_CHOICE = (
         ('le', 'Leaf'),
         ('tg', 'Tea bag'),
         )
     
-    Status = models.CharField(max_length=10,  choices=Status_Choice,  default='le')
+    status = models.CharField(max_length=10,  choices=STATUS_CHOICE,  default='le')
     
-    text = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return "{}/{}/{}".format(self.name, self.company, self.status)
+    
+
+class Entry(models.Model):
+    author  = models.ForeignKey('auth.User')
+
+    tea = models.CharField(max_length=50, null=True, blank=True)
+
+    comment = models.TextField(null=True, blank=True)
     
     #Personal_Grade_Choice = (
     #    ('L', 'Like'),
@@ -63,16 +85,10 @@ class Log_structure(models.Model):
         (True, 'Like'),
         (False, 'Dislike'),
         )
-    Grade = models. BooleanField(choices=Personal_Grade_Choice,  default=True)
+    like = models.BooleanField(choices=Personal_Grade_Choice,  default=True)
     
-    created_date = models.DateTimeField(
-                default=timezone.now)
-    published_date = models.DateTimeField(
-            blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return "{}/{}/{}".format(self.author.name, self.tea, self.created_date)
