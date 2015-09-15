@@ -3,7 +3,42 @@
         <title> Tea Diary</title>
     </head>
     <body>
-        <p>Hi there!</p>
-        <p>It works!</p>
+		<div>
+		    <h1><a href="/">Let's talk</a></h1>
+		</div>
+
+		
+        <div>
+			
+		{% regroup posts by Company as company_list %}
+		{% for company in company_list %}
+		     
+		    {% regroup company.list|dictsortreversed:"published_date" by name as name_list %}
+			{%for name in name_list%}
+				
+				{% regroup name.list by get_Nation_display as Nation_list %}
+				{%for nation in Nation_list %}
+					
+					{% regroup nation.list by get_Region_display as Region_list %}
+					{%for region in Region_list %}
+						<table style="width:1000px" >
+					    	<tr>{{ company.grouper }} : {{nation.grouper}} {{region.grouper}} : {{ name.grouper }}    </tr>
+						{%for item in region.list %}
+							<tr>
+							<td width="15%">{{item.author}} {{ item.published_date|date:"M d, Y" }}  </td> 
+							<td width="5%"> {{item.get_Grade_display}}  </td> 
+							<td width="80%">{{item.text }}             </td> 
+							</tr>
+						{% endfor %}
+						</table>
+					{% endfor %}
+					
+		       	{% endfor %}
+			{% endfor %}
+			
+		{% endfor %}
+		
+		</div>
+		
     </body>
 </html>

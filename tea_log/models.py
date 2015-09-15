@@ -19,11 +19,11 @@ class Log_structure(models.Model):
     Color = models.CharField(max_length=10,  choices=Tea_Color_Choices,  default='OO')
     
     Nation_Choices = (
-        ('CH', 'Chinese'),
-        ('JA', 'Japanese'),
-        ('ID', 'India'),
-        ('NE', 'Nepalese'),
-        ('CY', 'Cylon'),
+        ('CH', 'Chinese'  ),
+        ('JA', 'Japanese' ),
+        ('ID', 'India'    ),
+        ('NE', 'Nepalese' ),
+        ('CY', 'Cylon'    ),
         ('TW', 'Twiwanese')
         )
     
@@ -41,7 +41,7 @@ class Log_structure(models.Model):
     
     Region = models.CharField(max_length=10,  choices=Region_Choice,  default='Un')
     
-    name = models.CharField(max_length=50, default='NULL')
+    name = models.CharField(max_length=50, null=True, blank=True)
     
     Status_Choice = (
         ('le', 'Leaf'),
@@ -52,18 +52,18 @@ class Log_structure(models.Model):
     
     text = models.TextField(null=True, blank=True)
     
-    Personal_Grade_Choice = (
-        ('L', 'Like'),
-        ('D', 'Dislike'),
-        )
-    
-    Grade = models.CharField(max_length=10, choices=Personal_Grade_Choice,  default='L')
-    
     #Personal_Grade_Choice = (
-    #    (True, 'Like'),
-    #    (False, 'Dislike'),
+    #    ('L', 'Like'),
+    #    ('D', 'Dislike'),
     #    )
-    #Grade = models. BooleanField(choices=Personal_Grade_Choice,  default=True)
+    #
+    #Grade = models.CharField(max_length=10, choices=Personal_Grade_Choice,  default='L')
+    
+    Personal_Grade_Choice = (
+        (True, 'Like'),
+        (False, 'Dislike'),
+        )
+    Grade = models. BooleanField(choices=Personal_Grade_Choice,  default=True)
     
     created_date = models.DateTimeField(
                 default=timezone.now)
