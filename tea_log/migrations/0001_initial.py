@@ -15,44 +15,37 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Company',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(max_length=100, unique=True, default='')),
             ],
         ),
         migrations.CreateModel(
             name='Entry',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('tea', models.CharField(null=True, blank=True, max_length=50)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('comment', models.TextField(null=True, blank=True)),
-                ('like', models.BooleanField(default=True, choices=[(True, 'Like'), (False, 'Dislike')])),
+                ('like', models.BooleanField(choices=[(True, 'Like'), (False, 'Dislike')], default=True)),
                 ('created_date', models.DateTimeField(auto_now_add=True)),
                 ('modified_date', models.DateTimeField(auto_now=True)),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
-            name='Region',
-            fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=20, unique=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Tea',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('nation', models.CharField(default='CH', max_length=10, choices=[('CH', 'Chinese'), ('JA', 'Japanese'), ('ID', 'India'), ('NE', 'Nepalese'), ('CY', 'Cylon'), ('TW', 'Twiwanese'), ('KO', 'Korea')])),
-                ('color', models.CharField(default='OO', max_length=10, choices=[('GR    ', 'Green'), ('BL    ', 'Black'), ('WH    ', 'White'), ('OO    ', 'Oolong'), ('PU-ERH', 'Pu-erh'), ('PURPLE', 'Purple'), ('BLENED', 'Blened')])),
-                ('status', models.CharField(default='le', max_length=10, choices=[('le', 'Leaf'), ('tg', 'Tea bag')])),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('nation', models.CharField(max_length=10, choices=[('CH', 'Chinese'), ('JA', 'Japanese'), ('ID', 'India'), ('NE', 'Nepalese'), ('CY', 'Cylon'), ('TW', 'Twiwanese'), ('KO', 'Korea'), ('Un    ', 'Unknown')], default='CH')),
+                ('region', models.CharField(max_length=20, choices=[('An    ', 'Anxi        '), ('Guang ', 'Guangdong   '), ('Wu    ', 'WuYiMountain'), ('Yun   ', 'Yunnan      '), ('Dar   ', 'Darjeeling  '), ('ASS   ', 'Assam  '), ('Un    ', 'Unknown')], default='Un', unique=True)),
+                ('color', models.CharField(max_length=10, choices=[('GR    ', 'Green'), ('BL    ', 'Black'), ('WH    ', 'White'), ('OO    ', 'Oolong'), ('PU-ERH', 'Pu-erh'), ('PURPLE', 'Purple'), ('BLENED', 'Blened')], default='OO')),
+                ('status', models.CharField(max_length=10, choices=[('le', 'Leaf'), ('tg', 'Tea bag')], default='le')),
                 ('company', models.ForeignKey(to='tea_log.Company')),
             ],
         ),
         migrations.CreateModel(
             name='TeaName',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=20, unique=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(max_length=20, unique=True, default='')),
             ],
         ),
         migrations.AddField(
@@ -61,8 +54,8 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(to='tea_log.TeaName'),
         ),
         migrations.AddField(
-            model_name='tea',
-            name='region',
-            field=models.ForeignKey(to='tea_log.Region'),
+            model_name='entry',
+            name='tea_info',
+            field=models.ForeignKey(null=True, to='tea_log.Tea'),
         ),
     ]
