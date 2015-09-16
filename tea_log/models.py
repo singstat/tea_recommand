@@ -24,7 +24,7 @@ class Region(models.Model):
         return self.name
 
 class TeaName(models.Model):
-    name = models.CharField(max_legnth=20, unique=True)
+    name = models.CharField(max_length=20, unique=True)
     def __str__(self):
         return self.name
 
