@@ -39,7 +39,7 @@ class Tea(models.Model):
     ('Un    ','Unknown')
     )
 
-    region = models.CharField(max_length=20, choices=REGION_CHOICE,unique=True, default='Un')
+    region = models.CharField(max_length=20, choices=REGION_CHOICE, default='Un')
     
     COLOR_CHOICE = (
             ('GR    ', 'Green'),

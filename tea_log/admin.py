@@ -1,14 +1,29 @@
 from django.contrib import admin
-from .models import Entry
-from .models import Tea
+from .models import Entry, Tea, Company, TeaName
 
-from .models import Company
 
-from .models import TeaName
 
-admin.site.register(TeaName)
-admin.site.register(Company)
+    
+class TeaInline(admin.TabularInline): 
+    model = Tea
+    extra = 1 
 
-admin.site.register(Tea)
+class TeanameAdmin(admin.ModelAdmin):
+    fields = ['name']
+    inlines = [TeaInline]
+
+class CompanyAdmin(admin.ModelAdmin):
+    fields = ['name']
+    
+class TeaAdmin(admin.ModelAdmin):
+    list_display = ('company','name', 'nation', 'region', 'color', 'status')
+    #list_filter = (
+    #        ('name', admin.RelatedOnlyFieldListFilter),
+    #    )
+    #inlines = [TeanameInline]
+
+admin.site.register(TeaName, TeanameAdmin)
+
 admin.site.register(Entry)
-# Register your models here.
+admin.site.register(Company)
+admin.site.register(Tea, TeaAdmin)
