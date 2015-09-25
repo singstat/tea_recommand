@@ -61,7 +61,7 @@ class Tea(models.Model):
     status = models.CharField(max_length=10,  choices=STATUS_CHOICE,  default='le')
     
     def __str__(self):
-        return "{}/{}/{}".format(self.name, self.company, self.status)
+        return "{} : {} - {}".format(self.company,self.name,self.get_status_display())
     
 
 
