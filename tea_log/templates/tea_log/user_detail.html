@@ -1,0 +1,14 @@
+{% extends "tea_log/base.html" %}
+	{% block content %}
+		<div>
+		<h1>{{ name }}'s log</a></h1>
+		</div>
+		
+		<div>
+		{% for item in posts%}	
+			<li> {{ item.modified_date|date:"m/d/y H:M" }} - {{ name }} {{item.get_like_display}}  {{item.tea_info}} ~
+			{{ item.comment}}</li>
+		{% endfor %}
+		</div>
+	{% endblock content %}
+
