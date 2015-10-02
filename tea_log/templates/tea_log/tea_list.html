@@ -1,0 +1,45 @@
+{% extends "tea_log/base.html" %}
+	{% block content %}
+		<div>
+		<h1><a href="">Would you mind if I want to talk about tea?</a></h1>
+		</div>
+		
+		<div>
+		
+	    {% if user.is_authenticated %}
+	    <form method="POST" class="post-form">{% csrf_token %}
+	        {{ form.as_table }}
+	    <button type="submit" class="save btn btn-default">Save</button>
+	
+	    </form>
+		{% endif %}
+		<!-- 
+		{% for field in form %}
+			{{field}}
+		{% endfor %}
+		
+		<h2>New log</h2>	
+		<p>{{form.tea_info}} {{form.like}}</p>
+		<p>{{form.comment}} <button type="submit" class="save btn btn-default">Save</button></p> 
+		-->
+			
+		{% regroup posts|dictsortreversed:"created_date" by tea_info as tea_info_list %}
+		{% for item in tea_info_list %}
+			<h2>{{ item.grouper }}</h2>	
+			<h3>Comment of someone who like this tea</h3>
+			{% for comp in item.list %}
+		    	{% if comp.like == True %}
+				<p>written by <a href="{% url "user_detail" un=comp.author %}">{{comp.author}}</a>: {{ comp.comment}} </p>
+				{% endif %}
+			{% endfor %}
+			<h3>Comment of someone who don't like this tea</h3>
+			{% for comp in item.list %}
+		    	{% if comp.like == False %}
+				<p>written by <a href="{% url "user_detail" un=comp.author %}">{{comp.author}}</a>: {{ comp.comment}} </p>
+				{% endif %}
+			{% endfor %}
+			
+		{% endfor %}
+		</div>
+	{% endblock content %}
+
