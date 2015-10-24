@@ -31,4 +31,6 @@ class TeaForm(forms.ModelForm):
     class Meta:
         model = Tea
         fields = ('name','company','nation','region','color','status')
+
+#class get_input(forms.Form):
         
