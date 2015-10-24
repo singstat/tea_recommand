@@ -31,13 +31,13 @@
 			<h3>Comment of someone who like this tea</h3>
 			{% for comp in item.list %}
 		    	{% if comp.like == True %}
-				<p>written by <a href="{% url "user_detail" un=comp.author %}">{{comp.author}}</a>: {{ comp.comment}} </p>
+				<p>written by <a href="{% url 'user_detail' un=comp.author %}">{{comp.author}}</a>: {{ comp.comment}} </p>
 				{% endif %}
 			{% endfor %}
 			<h3>Comment of someone who don't like this tea</h3>
 			{% for comp in item.list %}
 		    	{% if comp.like == False %}
-				<p>written by <a href="{% url "user_detail" un=comp.author %}">{{comp.author}}</a>: {{ comp.comment}} </p>
+				<p>written by <a href="{% url 'user_detail' un=comp.author %}">{{comp.author}}</a>: {{ comp.comment}} </p>
 				{% endif %}
 			{% endfor %}
 			
