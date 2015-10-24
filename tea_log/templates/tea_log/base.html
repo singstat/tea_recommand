@@ -10,9 +10,9 @@
 		{% if user.is_authenticated %}
 			<a href="{% url 'add_new' %}"> add Tea company </a>
 			<a href="{% url 'add_tea' %}"> add Tea information </a>
-			
+			<a href="{% url 'django.contrib.auth.views.logout' %}" class="top-menu"><span class="glyphicon glyphicon-log-out"></span></a>
 		{% else %}
-			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-log-in"></span></a>
 		{% endif %}
     </head>
     <body>

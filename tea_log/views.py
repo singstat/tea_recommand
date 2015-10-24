@@ -7,8 +7,8 @@ from django.shortcuts import render, get_object_or_404
 
 from .forms import PostForm, TeaInfo, TeaForm
 
-
 from django.contrib.auth.decorators import login_required
+
 
 def tea_list(request):
     posts = Entry.objects.order_by('-created_date')
@@ -22,12 +22,13 @@ def tea_list(request):
             post.published_date = timezone.now()
             post.save()
             post.author = request.user
-#			if request.user.is_authenticated():
-#				post.author = request.user
-#			else:
-#				post.author = User.objects.get(username= 'sing')
 
-            return render(request,'tea_log/tea_list.html', {'posts': posts, 'form': form})
+            #if request.user.is_authenticated():
+            #post.author = request.user
+            #else:
+            #post.author = User.objects.get(username= 'sing')
+
+            return render(request, 'tea_log/tea_list.html', {'posts': posts, 'form': form})
     else:
         form = PostForm()
 
@@ -35,8 +36,9 @@ def tea_list(request):
 
 
 def user_detail(request, un):
-    post = Entry.objects.filter( author= User.objects.get(username= un).pk ).order_by('-created_date')
-    return render(request, 'tea_log/user_detail.html', {'posts': post,'name': un})
+    post = Entry.objects.filter(author=User.objects.get(username=un).pk).order_by('-created_date')
+    return render(request, 'tea_log/user_detail.html', {'posts': post, 'name': un})
+
 
 @login_required(login_url='/accounts/login/')
 def add_new(request):
@@ -51,7 +53,8 @@ def add_new(request):
         form = TeaInfo()
     return render(request, 'tea_log/edit.html', {'form': form})
 
-@login_required(login_url='/accounts/login/')	
+
+@login_required(login_url='/accounts/login/')
 def add_tea(request):
     form = TeaForm()
     if request.method == "POST":
@@ -67,7 +70,7 @@ def add_tea(request):
 
     return render(request, 'tea_log/edit2.html', {'form': form})
 
-#def add_two(request):
+# def add_two(request):
 #	form = TeaInfo()
 #	sub_form = TeaForm()
 #	if request.method == "POST":
